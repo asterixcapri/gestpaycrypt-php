@@ -1,7 +1,7 @@
 GestPayCrypt-PHP
 ----------------
 
-GestPayCrypt-PHP è l'implementazione open source (licenza LGPL) in PHP delle
+GestPayCrypt-PHP e` l'implementazione open source (licenza LGPL) in PHP delle
 classi GestPayCrypt e GestPayCryptHS che Bancasella distribuisce in Java per
 permettere l'interfacciamento al sistema di pagamento online GestPay.
 
@@ -11,7 +11,7 @@ l'ambiente di esecuzione java sul server web, ed evitare di configurare
 il supporto java in PHP, cosa non sempre possibile, soprattutto in
 situazioni di hosting.
 
-La documentazione ufficiale di Banca Sella per il suo utilizzo è
+La documentazione ufficiale di Banca Sella per il suo utilizzo e`
 valida anche per questa reimplementazione:
 
 http://www.sellanet.it/download.asp
@@ -29,7 +29,7 @@ Sella sono 3:
 
 La classe GestPayCrypt lavora solo ed esclusivamente con GestPay con
 architettura Crittografia. La prima e la seconda architettura continuano
-ad utilizzare le one time password (file ric e ris) per retrocompatibilità.
+ad utilizzare le one time password (file ric e ris) per retrocompatibilita`.
 
 
 Classe High Security GestPayCryptHS
@@ -38,7 +38,7 @@ Classe High Security GestPayCryptHS
 Se si intende utilizzare una connessione sicura HTTPS per le comunicazioni
 server to server bisogna instanziare la classe GestPayCryptHS (high security)
 in tutto e per tutto uguale nell'interfaccia a GestPayCrypt.
-Perchè tale classe possa funzionare correttamente è necessario soddisfare almeno
+Perche` tale classe possa funzionare correttamente e` necessario soddisfare almeno
 uno dei seguenti requisiti:
 
 1) Versione di PHP > 4.3.0 e supporto estensione OpenSSL
