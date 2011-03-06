@@ -1,0 +1,17 @@
+2004-12-20 aleast@capri.it
+	* Migliorata sicurezza di GestPayCryptHS::HttpGetLine()
+	* Corretti i file di esempio e aggiornati gli esempi di banca sella
+
+2003-07-04 aleast@capri.it
+	* Supporto della chiamata High Security GestPayCryptHS attraverso
+	tre possibilità:
+
+	- PHP > 4.3.0 e supporto estensione OpenSSL
+	- PHP con supporto CURL
+	- Binario CURL
+
+	* Aggiornamento alla versione 2.0 delle classi java
+	Banca Sella effettuato da Stefano Vita Finzi
+	<stefano.vita@pronesis.it>
+
+
