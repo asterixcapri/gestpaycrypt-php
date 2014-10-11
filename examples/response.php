@@ -3,11 +3,11 @@
 require_once "../GestPayCrypt.inc.php";
 
 if (empty($_GET["a"])) {
-    die("Parametro mancante: 'a'\n");
+    throw new Exception("Parametro mancante: 'a'");
 }
 
 if (empty($_GET["b"])) {
-    die("Parametro mancante: 'b'\n");
+    throw new Exception("Parametro mancante: 'b'");
 }
 
 $gestpay = new GestPayCryptHS();
