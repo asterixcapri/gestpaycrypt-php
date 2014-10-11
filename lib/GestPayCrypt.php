@@ -29,356 +29,358 @@
 
 class GestPayCrypt
 {
-    private $ShopLogin;
-    private $Currency;
-    private $Amount;
-    private $ShopTransactionID;
-    private $CardNumber;
-    private $ExpMonth;
-    private $ExpYear;
-    private $BuyerName;
-    private $BuyerEmail;
-    private $Language;
-    private $CustomInfo;
-    private $AuthorizationCode;
-    private $ErrorCode;
-    private $ErrorDescription;
-    private $BankTransactionID;
-    private $AlertCode;
-    private $AlertDescription;
-    private $EncryptedString;
-    private $ToBeEncrypt;
-    private $Decrypted;
-    private $TransactionResult;
-    private $Transport;
-    private $DomainName;
-    private $Port;
+    private $shopLogin;
+    private $currency;
+    private $amount;
+    private $shopTransactionId;
+    private $cardNumber;
+    private $expMonth;
+    private $expYear;
+    private $buyerName;
+    private $buyerEmail;
+    private $language;
+    private $customInfo;
+    private $authorizationCode;
+    private $errorCode;
+    private $errorDescription;
+    private $bankTransactionId;
+    private $alertCode;
+    private $alertDescription;
+    private $encryptedString;
+    private $toBeEncrypt;
+    private $decrypted;
+    private $transactionResult;
+    private $transport;
+    private $domainName;
+    private $port;
+    private $scriptEncrypt;
+    private $scriptDecrypt;
     private $separator;
     private $errDescription;
     private $errNumber;
-    private $Version;
-    private $Min;
-    private $CVV;
+    private $version;
+    private $min;
+    private $cvv;
     private $country;
     private $vbvrisp;
     private $vbv;
 
     public function __construct()
     {
-        $this->ShopLogin = "";
-        $this->Currency = "";
-        $this->Amount = "";
-        $this->ShopTransactionID = "";
-        $this->CardNumber = "";
-        $this->ExpMonth = "";
-        $this->ExpYear = "";
-        $this->BuyerName = "";
-        $this->BuyerEmail = "";
-        $this->Language = "";
-        $this->CustomInfo = "";
-        $this->AuthorizationCode = "";
-        $this->ErrorCode = "0";
-        $this->ErrorDescription = "";
-        $this->BankTransactionID = "";
-        $this->AlertCode = "";
-        $this->AlertDescription = "";
-        $this->EncryptedString = "";
-        $this->ToBeEncrypt = "";
-        $this->Decrypted = "";
-        $this->Transport = "tcp";
-        $this->DomainName = "ecomm.sella.it";
-        $this->Port = "80";
-        $this->ScriptEnCrypt = "/CryptHTTP/Encrypt.asp";
-        $this->ScriptDecrypt = "/CryptHTTP/Decrypt.asp";
+        $this->shopLogin = "";
+        $this->currency = "";
+        $this->amount = "";
+        $this->shopTransactionId = "";
+        $this->cardNumber = "";
+        $this->expMonth = "";
+        $this->expYear = "";
+        $this->buyerName = "";
+        $this->buyerEmail = "";
+        $this->language = "";
+        $this->customInfo = "";
+        $this->authorizationCode = "";
+        $this->errorCode = "0";
+        $this->errorDescription = "";
+        $this->bankTransactionId = "";
+        $this->alertCode = "";
+        $this->alertDescription = "";
+        $this->encryptedString = "";
+        $this->toBeEncrypt = "";
+        $this->decrypted = "";
+        $this->transport = "tcp";
+        $this->domainName = "ecomm.sella.it";
+        $this->port = "80";
+        $this->scriptEncrypt = "/CryptHTTP/Encrypt.asp";
+        $this->scriptDecrypt = "/CryptHTTP/Decrypt.asp";
         $this->separator = "*P1*";
         $this->errDescription = "";
         $this->errNumber = "0";
-        $this->Version = "2.0";
-        $this->Min = "";
-        $this->CVV = "";
+        $this->version = "2.0";
+        $this->min = "";
+        $this->cvv = "";
         $this->country = "";
         $this->vbvrisp = "";
         $this->vbv = "";
     }
 
-    public function SetShopLogin($val)
+    public function setShopLogin($val)
     {
-        $this->ShopLogin = $val;
+        $this->shopLogin = $val;
 
         return $this;
     }
 
-    public function GetShopLogin()
+    public function getShopLogin()
     {
-        return $this->ShopLogin;
+        return $this->shopLogin;
     }
 
-    public function SetCurrency($val)
+    public function setCurrency($val)
     {
-        $this->Currency = $val;
+        $this->currency = $val;
 
         return $this;
     }
 
-    public function GetCurrency()
+    public function getCurrency()
     {
-        return $this->Currency;
+        return $this->currency;
     }
 
-    public function SetAmount($val)
+    public function setAmount($val)
     {
-        $this->Amount = $val;
+        $this->amount = $val;
 
         return $this;
     }
 
-    public function GetAmount()
+    public function getAmount()
     {
-        return $this->Amount;
+        return $this->amount;
     }
 
-    public function SetShopTransactionID($val)
+    public function setShopTransactionID($val)
     {
-        $this->ShopTransactionID = urlencode(trim($val));
+        $this->shopTransactionId = urlencode(trim($val));
 
         return $this;
     }
 
-    public function GetShopTransactionID()
+    public function getShopTransactionID()
     {
-        return urldecode($this->ShopTransactionID);
+        return urldecode($this->shopTransactionId);
     }
 
-    public function SetCardNumber($val)
+    public function setCardNumber($val)
     {
-        $this->CardNumber = $val;
+        $this->cardNumber = $val;
 
         return $this;
     }
 
-    public function SetExpMonth($val)
+    public function setExpMonth($val)
     {
-        $this->ExpMonth = $val;
+        $this->expMonth = $val;
 
         return $this;
     }
 
-    public function SetExpYear($val)
+    public function setExpYear($val)
     {
-        $this->ExpYear = $val;
+        $this->expYear = $val;
 
         return $this;
     }
 
-    public function SetMIN($val)
+    public function setMin($val)
     {
-        $this->Min = $val;
+        $this->min = $val;
 
         return $this;
     }
 
-    public function SetCVV($val)
+    public function setCvv($val)
     {
-        $this->CVV = $val;
+        $this->cvv = $val;
 
         return $this;
     }
 
-    public function SetBuyerName($val)
+    public function setBuyerName($val)
     {
-        $this->BuyerName = urlencode(trim($val));
+        $this->buyerName = urlencode(trim($val));
 
         return $this;
     }
 
-    public function SetBuyerEmail($val)
+    public function setBuyerEmail($val)
     {
-        $this->BuyerEmail = trim($val);
+        $this->buyerEmail = trim($val);
 
         return $this;
     }
 
-    public function SetLanguage($val)
+    public function setLanguage($val)
     {
-        $this->Language = trim($val);
+        $this->language = trim($val);
 
         return $this;
     }
 
-    public function SetCustomInfo($val)
+    public function setCustomInfo($val)
     {
-        $this->CustomInfo = urlencode(trim($val));
+        $this->customInfo = urlencode(trim($val));
 
         return $this;
     }
 
-    public function GetCustomInfo()
+    public function getCustomInfo()
     {
-        return urldecode($this->CustomInfo);
+        return urldecode($this->customInfo);
     }
 
-    public function SetEncryptedString($val)
+    public function setEncryptedString($val)
     {
-        $this->EncryptedString = $val;
+        $this->encryptedString = $val;
 
         return $this;
     }
 
-    public function GetCountry()
+    public function getCountry()
     {
         return $this->country;
     }
 
-    public function GetVBV()
+    public function getVbv()
     {
         return $this->vbv;
     }
 
-    public function GetVBVrisp()
+    public function getVbvRisp()
     {
         return $this->vbvrisp;
     }
 
-    public function GetBuyerName()
+    public function getBuyerName()
     {
-        return urldecode($this->BuyerName);
+        return urldecode($this->buyerName);
     }
 
-    public function GetBuyerEmail()
+    public function getBuyerEmail()
     {
-        return $this->BuyerEmail;
+        return $this->buyerEmail;
     }
 
-    public function GetAuthorizationCode()
+    public function getAuthorizationCode()
     {
-        return $this->AuthorizationCode;
+        return $this->authorizationCode;
     }
 
-    public function GetErrorCode()
+    public function getErrorCode()
     {
-        return $this->ErrorCode;
+        return $this->errorCode;
     }
 
-    public function GetErrorDescription()
+    public function getErrorDescription()
     {
-        return $this->ErrorDescription;
+        return $this->errorDescription;
     }
 
-    public function GetBankTransactionID()
+    public function getBankTransactionID()
     {
-        return $this->BankTransactionID;
+        return $this->bankTransactionId;
     }
 
-    public function GetTransactionResult()
+    public function getTransactionResult()
     {
-        return $this->TransactionResult;
+        return $this->transactionResult;
     }
 
-    public function GetAlertCode()
+    public function getAlertCode()
     {
-        return $this->AlertCode;
+        return $this->alertCode;
     }
 
-    public function GetAlertDescription()
+    public function getAlertDescription()
     {
-        return $this->AlertDescription;
+        return $this->alertDescription;
     }
 
-    public function GetEncryptedString()
+    public function getEncryptedString()
     {
-        return $this->EncryptedString;
+        return $this->encryptedString;
     }
 
-    public function SetPort($port)
+    public function setPort($port)
     {
-        $this->Port = $port;
+        $this->port = $port;
 
         return $this;
     }
 
-    public function GetPort()
+    public function getPort()
     {
-        return $this->Port;
+        return $this->port;
     }
 
-    public function SetDomainName($domain_name)
+    public function setDomainName($domain_name)
     {
-        $this->DomainName = $domain_name;
+        $this->domainName = $domain_name;
 
         return $this;
     }
 
-    public function GetDomainName()
+    public function getDomainName()
     {
-        return $this->DomainName;
+        return $this->domainName;
     }
 
-    public function SetScriptEnCrypt($script)
+    public function setScriptEncrypt($script)
     {
-        $this->ScriptEnCrypt = $script;
+        $this->scriptEncrypt = $script;
 
         return $this;
     }
 
-    public function SetScriptDeCrypt($script)
+    public function setScriptDecrypt($script)
     {
-        $this->ScriptDeCrypt = $script;
+        $this->scriptDecrypt = $script;
 
         return $this;
     }
 
-    public function GetScriptType($type)
+    public function getScriptType($type)
     {
         if ($type == "crypt") {
-            return $this->ScriptEnCrypt;
+            return $this->scriptEncrypt;
         }
         else {
-            return $this->ScriptDeCrypt;
+            return $this->scriptDecrypt;
         }
     }
 
-    public function Encrypt()
+    public function encrypt()
     {
-        $this->ErrorCode = "0";
-        $this->ErrorDescription = "";
+        $this->errorCode = "0";
+        $this->errorDescription = "";
 
-        if (empty($this->ShopLogin)) {
-            $this->ErrorCode = "546";
-            $this->ErrorDescription = "IDshop not valid";
-
-            return false;
-        }
-
-        if (empty($this->Currency)) {
-            $this->ErrorCode = "552";
-            $this->ErrorDescription = "Currency not valid";
+        if (empty($this->shopLogin)) {
+            $this->errorCode = "546";
+            $this->errorDescription = "ShopLogin not valid";
 
             return false;
         }
 
-        if (empty($this->Amount)) {
-            $this->ErrorCode = "553";
-            $this->ErrorDescription = "Amount not valid";
+        if (empty($this->currency)) {
+            $this->errorCode = "552";
+            $this->errorDescription = "Currency not valid";
 
             return false;
         }
 
-        if (empty($this->ShopTransactionID)) {
-            $this->ErrorCode = "551";
-            $this->ErrorDescription = "Shop Transaction ID not valid";
+        if (empty($this->amount)) {
+            $this->errorCode = "553";
+            $this->errorDescription = "Amount not valid";
 
             return false;
         }
 
-        $response = $this->_http_get_response($this->ShopLogin, $this->_get_parsed_encrypt_arguments());
+        if (empty($this->shopTransactionId)) {
+            $this->errorCode = "551";
+            $this->errorDescription = "Shop Transaction ID not valid";
+
+            return false;
+        }
+
+        $response = $this->_http_get_response($this->shopLogin, $this->_get_parsed_encrypt_arguments());
 
         if ($response == -1) {
             false;
         }
 
-        $this->EncryptedString = $this->_parse_response("crypt", $response);
+        $this->encryptedString = $this->_parse_response("crypt", $response);
 
-        if ($this->EncryptedString == -1) {
+        if ($this->encryptedString == -1) {
             return false;
         }
 
@@ -390,17 +392,17 @@ class GestPayCrypt
         $args = "";
 
         $vars = array(
-            "PAY1_CVV" => $this->CVV,
-            "PAY1_MIN" => $this->Min,
-            "PAY1_UICCODE" => $this->Currency,
-            "PAY1_AMOUNT" => $this->Amount,
-            "PAY1_SHOPTRANSACTIONID" => $this->ShopTransactionID,
-            "PAY1_CARDNUMBER" => $this->CardNumber,
-            "PAY1_EXPMONTH" => $this->ExpMonth,
-            "PAY1_EXPYEAR" => $this->ExpYear,
-            "PAY1_CHNAME" => $this->BuyerName,
-            "PAY1_CHEMAIL" => $this->BuyerEmail,
-            "PAY1_IDLANGUAGE" => $this->Language
+            "PAY1_CVV" => $this->cvv,
+            "PAY1_MIN" => $this->min,
+            "PAY1_UICCODE" => $this->currency,
+            "PAY1_AMOUNT" => $this->amount,
+            "PAY1_SHOPTRANSACTIONID" => $this->shopTransactionId,
+            "PAY1_CARDNUMBER" => $this->cardNumber,
+            "PAY1_EXPMONTH" => $this->expMonth,
+            "PAY1_EXPYEAR" => $this->expYear,
+            "PAY1_CHNAME" => $this->buyerName,
+            "PAY1_CHEMAIL" => $this->buyerEmail,
+            "PAY1_IDLANGUAGE" => $this->language
         );
 
         foreach ($vars as $name => $value) {
@@ -410,50 +412,50 @@ class GestPayCrypt
         }
 
         $args = substr($args, 0, - strlen($this->separator));
-        $args .= $this->CustomInfo;
+        $args .= $this->customInfo;
         $args = str_replace(" ", "�", $args);
 
         return $args;
     }
 
-    public function Decrypt()
+    public function decrypt()
     {
-        $this->ErrorCode = "0";
-        $this->ErrorDescription = "";
+        $this->errorCode = "0";
+        $this->errorDescription = "";
 
-        if (empty($this->ShopLogin)) {
-            $this->ErrorCode = "546";
-            $this->ErrorDescription = "IDshop not valid";
-
-            return false;
-        }
-
-        if (empty($this->EncryptedString)) {
-            $this->ErrorCode = "1009";
-            $this->ErrorDescription = "String to Decrypt not valid";
+        if (empty($this->shopLogin)) {
+            $this->errorCode = "546";
+            $this->errorDescription = "ShopLogin not valid";
 
             return false;
         }
 
-        $response = $this->_http_get_response($this->ShopLogin, $this->EncryptedString);
+        if (empty($this->encryptedString)) {
+            $this->errorCode = "1009";
+            $this->errorDescription = "String to Decrypt not valid";
+
+            return false;
+        }
+
+        $response = $this->_http_get_response($this->shopLogin, $this->encryptedString);
 
         if ($response == -1) {
             false;
         }
 
-        $this->Decrypted = $this->_parse_response("decrypt", $response);
+        $this->decrypted = $this->_parse_response("decrypt", $response);
 
-        if ($this->Decrypted == -1) {
+        if ($this->decrypted == -1) {
             return false;
         }
-        elseif (empty($this->Decrypted)) {
-            $this->ErrorCode = "9999";
-            $this->ErrorDescription = "Empty decrypted string";
+        elseif (empty($this->decrypted)) {
+            $this->errorCode = "9999";
+            $this->errorDescription = "Empty decrypted string";
 
             return false;
         }
 
-        $this->Decrypted = str_replace("�", " ", $this->Decrypted);
+        $this->decrypted = str_replace("�", " ", $this->decrypted);
 
         $this->_parse_decrypted_data();
 
@@ -465,20 +467,24 @@ class GestPayCrypt
         $errno = "";
         $errstr = "";
 
-        $socket = fsockopen($this->GetTransport."://".$this->GetDomainName(), $this->GetPort(), $errno, $errstr, 60);
+        $socket = fsockopen(
+            $this->getTransport()."://".$this->getDomainName(),
+            $this->getPort(),
+            $errno,
+            $errstr,
+            60
+        );
 
         if (!$socket) {
-            $this->ErrorCode = "9999";
-            $this->ErrorDescription = "Impossible to connect to host: ".$host;
+            $this->errorCode = "9999";
+            $this->errorDescription = "Impossible to connect to host: ".$host;
 
             return -1;
         }
 
-        $uri = $this->GetScriptType($type)."?a=".$a."&b=".$b;
+        $uri = $this->getScriptType($type)."?a=".$a."&b=".$b;
 
         fputs($socket, "GET ".$uri." HTTP/1.0\r\n\r\n");
-
-        $line = "";
 
         while (fgets($socket, 4096) != "\r\n") {
             ;
@@ -503,19 +509,19 @@ class GestPayCrypt
             $err = explode("-", $matches[1]);
 
             if (empty($err[0]) && empty($err[1])) {
-                $this->ErrorCode = "9999";
-                $this->ErrorDescription = "Unknown error";
+                $this->errorCode = "9999";
+                $this->errorDescription = "Unknown error";
             }
             else {
-                $this->ErrorCode = trim($err[0]);
-                $this->ErrorDescription = trim($err[1]);
+                $this->errorCode = trim($err[0]);
+                $this->errorDescription = trim($err[1]);
             }
 
             return -1;
         }
         else {
-            $this->ErrorCode = "9999";
-            $this->ErrorDescription = "Response from server not valid";
+            $this->errorCode = "9999";
+            $this->errorDescription = "Response from server not valid";
 
             return -1;
         }
@@ -525,75 +531,73 @@ class GestPayCrypt
 
     private function _parse_decrypted_data()
     {
-        $keyval = explode($this->separator, $this->Decrypted);
+        $keyval = explode($this->separator, $this->decrypted);
 
         foreach ($keyval as $tagPAY1) {
             $tagPAY1val = explode("=", $tagPAY1);
 
             if (ereg("^PAY1_UICCODE", $tagPAY1)) {
-                $this->Currency = $tagPAY1val[1];
+                $this->currency = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_AMOUNT", $tagPAY1)) {
-                $this->Amount = $tagPAY1val[1];
+                $this->amount = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_SHOPTRANSACTIONID", $tagPAY1)) {
-                $this->ShopTransactionID = $tagPAY1val[1];
+                $this->shopTransactionId = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_CHNAME", $tagPAY1)) {
-                $this->BuyerName = $tagPAY1val[1];
+                $this->buyerName = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_CHEMAIL", $tagPAY1)) {
-                $this->BuyerEmail = $tagPAY1val[1];
+                $this->buyerEmail = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_AUTHORIZATIONCODE", $tagPAY1)) {
-                $this->AuthorizationCode = $tagPAY1val[1];
+                $this->authorizationCode = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_ERRORCODE", $tagPAY1)) {
-                $this->ErrorCode = $tagPAY1val[1];
+                $this->errorCode = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_ERRORDESCRIPTION", $tagPAY1)) {
-                $this->ErrorDescription = $tagPAY1val[1];
+                $this->errorDescription = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_BANKTRANSACTIONID", $tagPAY1)) {
-                $this->BankTransactionID = $tagPAY1val[1];
+                $this->bankTransactionId = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_ALERTCODE", $tagPAY1)) {
-                $this->AlertCode = $tagPAY1val[1];
+                $this->alertCode = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_ALERTDESCRIPTION", $tagPAY1)) {
-                $this->AlertDescription = $tagPAY1val[1];
+                $this->alertDescription = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_CARDNUMBER", $tagPAY1)) {
-                $this->CardNumber = $tagPAY1val[1];
+                $this->cardNumber = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_EXPMONTH", $tagPAY1)) {
-                $this->ExpMonth = $tagPAY1val[1];
+                $this->expMonth = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_EXPYEAR", $tagPAY1)) {
-                $this->ExpYear = $tagPAY1val[1];
+                $this->expYear = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_COUNTRY", $tagPAY1)) {
-                $this->ExpYear = $tagPAY1val[1];
+                $this->expYear = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_VBVRISP", $tagPAY1)) {
-                $this->ExpYear = $tagPAY1val[1];
+                $this->expYear = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_VBV", $tagPAY1)) {
-                $this->ExpYear = $tagPAY1val[1];
+                $this->expYear = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_IDLANGUAGE", $tagPAY1)) {
-                $this->Language = $tagPAY1val[1];
+                $this->language = $tagPAY1val[1];
             }
             elseif (ereg("^PAY1_TRANSACTIONRESULT", $tagPAY1)) {
-                $this->TransactionResult = $tagPAY1val[1];
+                $this->transactionResult = $tagPAY1val[1];
             }
             else {
-                $this->CustomInfo .= $tagPAY1.$this->separator;
+                $this->customInfo .= $tagPAY1.$this->separator;
             }
         }
 
-        $this->CustomInfo = substr($this->CustomInfo, 0, - strlen($this->separator));
+        $this->customInfo = substr($this->customInfo, 0, - strlen($this->separator));
     }
 }
-
-?>
