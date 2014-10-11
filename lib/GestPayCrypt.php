@@ -291,16 +291,16 @@ class GestPayCrypt
         return $this->encryptedString;
     }
 
-    public function setPort($port)
+    public function setTransport($transport)
     {
-        $this->port = $port;
+        $this->transport = $transport;
 
         return $this;
     }
 
-    public function getPort()
+    public function getTransport()
     {
-        return $this->port;
+        return $this->domainName;
     }
 
     public function setDomainName($domain_name)
@@ -313,6 +313,18 @@ class GestPayCrypt
     public function getDomainName()
     {
         return $this->domainName;
+    }
+
+    public function setPort($port)
+    {
+        $this->port = $port;
+
+        return $this;
+    }
+
+    public function getPort()
+    {
+        return $this->port;
     }
 
     public function setScriptEncrypt($script)
