@@ -47,7 +47,6 @@ class GestPayCrypt
     private $alertCode;
     private $alertDescription;
     private $encryptedString;
-    private $toBeEncrypt;
     private $decrypted;
     private $transactionResult;
     private $transport;
@@ -57,8 +56,6 @@ class GestPayCrypt
     private $scriptDecrypt;
     private $separator;
     private $errDescription;
-    private $errNumber;
-    private $version;
     private $min;
     private $cvv;
     private $country;
@@ -85,7 +82,6 @@ class GestPayCrypt
         $this->alertCode = "";
         $this->alertDescription = "";
         $this->encryptedString = "";
-        $this->toBeEncrypt = "";
         $this->decrypted = "";
         $this->transport = "tcp";
         $this->domainName = "ecomm.sella.it";
@@ -94,8 +90,6 @@ class GestPayCrypt
         $this->scriptDecrypt = "/CryptHTTP/Decrypt.asp";
         $this->separator = "*P1*";
         $this->errDescription = "";
-        $this->errNumber = "0";
-        $this->version = "2.0";
         $this->min = "";
         $this->cvv = "";
         $this->country = "";
@@ -300,7 +294,7 @@ class GestPayCrypt
 
     public function getTransport()
     {
-        return $this->domainName;
+        return $this->transport;
     }
 
     public function setDomainName($domain_name)
