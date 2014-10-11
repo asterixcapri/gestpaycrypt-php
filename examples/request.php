@@ -2,22 +2,21 @@
 
 require_once "../GestPayCrypt.inc.php";
 
-$crypt = new GestPayCrypt();
+$gestpay = new GestPayCryptHS();
 
-// impostare i seguenti parametri
-$crypt->SetShopLogin("SHOP LOGIN"); // Es. 9000001
-$crypt->SetShopTransactionID("TRANSACTION ID"); // Identificativo transazione. Es. "34az85ord19"
-$crypt->SetAmount("10"); // Importo. Es.: 1256.50
-$crypt->SetCurrency("242"); // Codice valuta. 242 = euro
+$gestpay->setShopLogin("SHOP LOGIN"); // Es. 9000001
+$gestpay->setShopTransactionID("TRANSACTION ID"); // Identificativo transazione. Es. "34az85ord19"
+$gestpay->setAmount("10"); // Importo. Es.: 1256.50
+$gestpay->setCurrency("242"); // Codice valuta. 242 = euro
 
-if (!$crypt->Encrypt()) {
-	die("Errore: ".$crypt->GetErrorCode().": ".$crypt->GetErrorDescription()."\n");
+if (!$gestpay->encrypt()) {
+    throw new Exception(
+        "Error: ".$gestpay->getErrorCode().": ".$gestpay->getErrorDescription()
+    );
 }
 
 $url = "https://ecomm.sella.it/gestpay/pagam.asp".
-       "?a=".$crypt->GetShopLogin().
-       "&b=".$crypt->GetEncryptedString();
+       "?a=".$gestpay->getShopLogin().
+       "&b=".$gestpay->getEncryptedString();
 
 header("Location: ".$url);
-
-?>

@@ -3,37 +3,34 @@
 require_once "../GestPayCrypt.inc.php";
 
 if (empty($_GET["a"])) {
-	die("Parametro mancante: 'a'\n");
+    die("Parametro mancante: 'a'\n");
 }
 
 if (empty($_GET["b"])) {
-	die("Parametro mancante: 'b'\n");
+    die("Parametro mancante: 'b'\n");
 }
 
-$crypt = new GestPayCrypt();
+$gestpay = new GestPayCryptHS();
+$gestpay->setShopLogin($_GET["a"]);
+$gestpay->setEncryptedString($_GET["b"]);
 
-$crypt->SetShopLogin($_GET["a"]);
-$crypt->SetEncryptedString($_GET["b"]);
-
-if (!$crypt->Decrypt()) {
-	die("Error: ".$crypt->GetErrorCode().": ".$crypt->GetErrorDescription()."\n");
+if (!$gestpay->decrypt()) {
+    throw new Exception(
+        "Error: ".$gestpay->getErrorCode().": ".$gestpay->getErrorDescription()
+    );
 }
 
-switch ($crypt->GetTransactionResult()) {
-	case "XX":
-		die("Esito transazione sospeso (pagamento tramite bonifico)\n");
-		break;
+$result = $gestpay->getTransactionResult();
 
-	case "KO":
-		die("Esito transazione negativo\n");
-		break;
-
-	case "OK":
-		die("Esito transazione positivo\n");
-		break;
-
-	default:
-		die("Esito transazione indefinito\n");
+if ($result == "XX") {
+    echo "Esito transazione sospeso (pagamento tramite bonifico)\n";
 }
-
-?>
+elseif ($result == "KO") {
+    echo "Esito transazione negativo\n";
+}
+elseif ($result == "OK") {
+    echo "Esito transazione positivo\n";
+}
+else {
+    echo "Esito transazione indefinito\n";
+}
