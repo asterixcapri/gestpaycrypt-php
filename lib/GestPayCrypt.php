@@ -55,7 +55,6 @@ class GestPayCrypt
     private $scriptEncrypt;
     private $scriptDecrypt;
     private $separator;
-    private $errDescription;
     private $min;
     private $cvv;
     private $country;
@@ -89,7 +88,6 @@ class GestPayCrypt
         $this->scriptEncrypt = "/CryptHTTP/Encrypt.asp";
         $this->scriptDecrypt = "/CryptHTTP/Decrypt.asp";
         $this->separator = "*P1*";
-        $this->errDescription = "";
         $this->min = "";
         $this->cvv = "";
         $this->country = "";
