@@ -384,13 +384,13 @@ class GestPayCrypt
             return false;
         }
 
-        $response = $this->_http_get_response($this->shopLogin, $this->_get_parsed_encrypt_arguments());
+        $response = $this->_httpGetResponse($this->shopLogin, $this->_getParsedEncryptArguments());
 
         if ($response == -1) {
             false;
         }
 
-        $this->encryptedString = $this->_parse_response("crypt", $response);
+        $this->encryptedString = $this->_parseResponse("crypt", $response);
 
         if ($this->encryptedString == -1) {
             return false;
@@ -399,7 +399,7 @@ class GestPayCrypt
         return true;
     }
 
-    public function _get_parsed_encrypt_arguments()
+    private function _getParsedEncryptArguments()
     {
         $args = "";
 
@@ -449,13 +449,13 @@ class GestPayCrypt
             return false;
         }
 
-        $response = $this->_http_get_response($this->shopLogin, $this->encryptedString);
+        $response = $this->_httpGetResponse($this->shopLogin, $this->encryptedString);
 
         if ($response == -1) {
             false;
         }
 
-        $this->decrypted = $this->_parse_response("decrypt", $response);
+        $this->decrypted = $this->_parseResponse("decrypt", $response);
 
         if ($this->decrypted == -1) {
             return false;
@@ -469,12 +469,12 @@ class GestPayCrypt
 
         $this->decrypted = str_replace("�", " ", $this->decrypted);
 
-        $this->_parse_decrypted_data();
+        $this->_parseDecryptedData();
 
         return true;
     }
 
-    protected function _http_get_response($type, $a, $b)
+    protected function _httpGetResponse($type, $a, $b)
     {
         $errno = "";
         $errstr = "";
@@ -509,7 +509,7 @@ class GestPayCrypt
         return $line;
     }
 
-    private function _parse_response($type, $response)
+    private function _parseResponse($type, $response)
     {
         $parsed = "";
         $matches = array();
@@ -541,7 +541,7 @@ class GestPayCrypt
         return $parsed;
     }
 
-    private function _parse_decrypted_data()
+    private function _parseDecryptedData()
     {
         $keyval = explode($this->separator, $this->decrypted);
 

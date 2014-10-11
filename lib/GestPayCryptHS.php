@@ -44,7 +44,7 @@ class GestPayCryptHS extends GestPayCrypt
         $this->setScriptDecrypt("/CryptHTTPS/Decrypt.asp");
     }
 
-    protected function _http_get_response($type, $a, $b)
+    protected function _httpGetResponse($type, $a, $b)
     {
         if (extension_loaded("openssl")) {
             return parent::_http_get_response($type, $a, $b);
