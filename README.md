@@ -1,7 +1,7 @@
 GestPayCrypt-PHP
 ================
 
-GestPayCrypt-PHP e` l'implementazione open source (licenza LGPL) in PHP delle
+GestPayCrypt-PHP è l'implementazione open source (licenza LGPL) in PHP delle
 classi GestPayCrypt e GestPayCryptHS che Bancasella distribuisce in Java per
 permettere l'interfacciamento al sistema di pagamento online GestPay.
 
@@ -11,10 +11,10 @@ l'ambiente di esecuzione java sul server web, ed evitare di configurare
 il supporto java in PHP, cosa non sempre possibile, soprattutto in
 situazioni di hosting.
 
-La documentazione ufficiale di Banca Sella per il suo utilizzo e`
+La documentazione ufficiale di Banca Sella per il suo utilizzo è
 valida anche per questa reimplementazione:
 
-http://www.sellanet.it/download.asp
+http://www.gestpay.it/gestpay/specifiche-tecniche/index.jsp
 
 
 Tipo di architetture supportate dal sistema di pagamento online GestPay
@@ -29,7 +29,7 @@ Sella sono 3:
 
 La classe GestPayCrypt lavora solo ed esclusivamente con GestPay con
 architettura Crittografia. La prima e la seconda architettura continuano
-ad utilizzare le one time password (file ric e ris) per retrocompatibilita`.
+ad utilizzare le one time password (file ric e ris) per retrocompatibilità.
 
 
 Classe High Security GestPayCryptHS
@@ -38,12 +38,12 @@ Classe High Security GestPayCryptHS
 Se si intende utilizzare una connessione sicura HTTPS per le comunicazioni
 server to server bisogna instanziare la classe GestPayCryptHS (high security)
 in tutto e per tutto uguale nell'interfaccia a GestPayCrypt.
-Perche` tale classe possa funzionare correttamente e` necessario soddisfare almeno
+Perchè tale classe possa funzionare correttamente è necessario soddisfare almeno
 uno dei seguenti requisiti:
 
-1) Versione di PHP > 4.3.0 e supporto estensione OpenSSL
-2) PHP con supporto CURL
-3) Binario CURL disponibile alla URL: http://curl.haxx.se/
+- Versione di PHP > 4.3.0 e supporto estensione OpenSSL
+- PHP con supporto CURL
+- Binario CURL disponibile alla URL: http://curl.haxx.se/
 
 
 Links
@@ -53,4 +53,4 @@ Banca Sella
 http://www.sella.it/
 
 Sistema di pagamento online GestPay e documentazione relativa
-http://www.easynolo.it/
+http://www.gestpay.it/
