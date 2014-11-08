@@ -1,0 +1,22 @@
+{
+    "name": "asterixcapri/gestpaycrypt",
+    "description": "PHP implementation of GestPayCrypt and GestPayCryptHS classes by Bancasella to use with GestPay online payment.",
+    "minimum-stability": "stable",
+    "license": "LGPL-2.1",
+    "authors": [
+        {
+            "name": "Alessandro Astarita",
+            "email": "aleast@capri.it"
+        },
+        {
+            "name": "Manuel Dalla Lana",
+            "email": "endelwar@aregar.it"
+        }
+    ],
+    "autoload": {
+        "classmap": ["lib/"]
+    },
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
