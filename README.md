@@ -1,5 +1,5 @@
 GestPayCrypt-PHP
-----------------
+================
 
 GestPayCrypt-PHP e` l'implementazione open source (licenza LGPL) in PHP delle
 classi GestPayCrypt e GestPayCryptHS che Bancasella distribuisce in Java per
