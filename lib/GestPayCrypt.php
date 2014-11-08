@@ -51,15 +51,19 @@ class GestPayCrypt
     private $transactionResult;
     private $transport;
     private $domainName;
+    private $testDomainName;
+    private $paymentUrl;
     private $port;
-    private $scriptEncrypt;
-    private $scriptDecrypt;
     private $separator;
     private $min;
     private $cvv;
     private $country;
-    private $vbvrisp;
     private $vbv;
+    private $vbvRisp;
+    private $threeDLevel;
+    private $scriptEncrypt;
+    private $scriptDecrypt;
+    private $testEnv;
 
     public function __construct()
     {
@@ -84,6 +88,8 @@ class GestPayCrypt
         $this->decrypted = "";
         $this->transport = "tcp";
         $this->domainName = "ecomm.sella.it";
+        $this->testDomainName = "testecomm.sella.it";
+        $this->paymentUrl = "/pagam/pagam.aspx";
         $this->port = "80";
         $this->scriptEncrypt = "/CryptHTTP/Encrypt.asp";
         $this->scriptDecrypt = "/CryptHTTP/Decrypt.asp";
@@ -91,10 +97,36 @@ class GestPayCrypt
         $this->min = "";
         $this->cvv = "";
         $this->country = "";
-        $this->vbvrisp = "";
         $this->vbv = "";
+        $this->vbvRisp = "";
+        $this->threeDLevel = "";
+        $this->testEnv = false;
     }
 
+    /**
+     * @param bool $enable
+     * @return GestPayCrypt
+     */
+    public function setTestEnv($enable)
+    {
+        $this->testEnv = $enable;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTestEnv()
+    {
+        return $this->testEnv;
+    }
+
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setShopLogin($val)
     {
         $this->shopLogin = $val;
@@ -102,11 +134,19 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getShopLogin()
     {
         return $this->shopLogin;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setCurrency($val)
     {
         $this->currency = $val;
@@ -114,11 +154,19 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getCurrency()
     {
         return $this->currency;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setAmount($val)
     {
         $this->amount = $val;
@@ -126,11 +174,19 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getAmount()
     {
         return $this->amount;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setShopTransactionID($val)
     {
         $this->shopTransactionId = urlencode(trim($val));
@@ -138,11 +194,19 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getShopTransactionID()
     {
         return urldecode($this->shopTransactionId);
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setCardNumber($val)
     {
         $this->cardNumber = $val;
@@ -150,6 +214,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setExpMonth($val)
     {
         $this->expMonth = $val;
@@ -157,6 +226,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setExpYear($val)
     {
         $this->expYear = $val;
@@ -164,6 +238,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setMin($val)
     {
         $this->min = $val;
@@ -171,6 +250,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setCvv($val)
     {
         $this->cvv = $val;
@@ -178,6 +262,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setBuyerName($val)
     {
         $this->buyerName = urlencode(trim($val));
@@ -185,6 +274,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setBuyerEmail($val)
     {
         $this->buyerEmail = trim($val);
@@ -192,6 +286,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setLanguage($val)
     {
         $this->language = trim($val);
@@ -199,6 +298,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setCustomInfo($val)
     {
         $this->customInfo = urlencode(trim($val));
@@ -206,11 +310,53 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param array $arrval
+     * @return GestPayCrypt|bool
+     */
+    public function setCustomInfoFromArray(array $arrval)
+    {
+        if (!is_array($arrval)) {
+            return false;
+        }
+        //check string validity
+        foreach ($arrval as $key => $val) {
+            if (strlen($val) > 300) {
+                $val = substr($val, 0, 300);
+            }
+            $arrval[$key] = urlencode($val);
+        }
+
+        $this->customInfo = http_build_query($arrval, '', $this->separator);
+
+        return $this;
+    }
+
+    public function getCustomInfoToArray()
+    {
+        $allinfo = explode($this->separator, $this->customInfo);
+        $customInfoArray = array();
+        foreach ($allinfo as $singleInfo) {
+            $tagval = explode("=", $singleInfo);
+            $customInfoArray[$tagval[0]] = urldecode($tagval[1]);
+        }
+
+        return $customInfoArray;
+    }
+
+    /**
+     * @return string
+     */
     public function getCustomInfo()
     {
         return urldecode($this->customInfo);
     }
 
+    /**
+     * @param string $val
+     *
+     * @return GestPayCrypt
+     */
     public function setEncryptedString($val)
     {
         $this->encryptedString = $val;
@@ -218,83 +364,143 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getCountry()
     {
         return $this->country;
     }
 
+    /**
+     * @return string
+     */
     public function getVbv()
     {
         return $this->vbv;
     }
 
+    /**
+     * @return string
+     */
     public function getVbvRisp()
     {
-        return $this->vbvrisp;
+        return $this->vbvRisp;
     }
 
+    /**
+     * @return string
+     */
+    public function get3dLevel()
+    {
+        return $this->threeDLevel;
+    }
+
+    /**
+     * @return string
+     */
     public function getBuyerName()
     {
         return urldecode($this->buyerName);
     }
 
+    /**
+     * @return string
+     */
     public function getBuyerEmail()
     {
         return $this->buyerEmail;
     }
 
+    /**
+     * @return string
+     */
     public function getAuthorizationCode()
     {
         return $this->authorizationCode;
     }
 
+    /**
+     * @return string
+     */
     public function getErrorCode()
     {
         return $this->errorCode;
     }
 
+    /**
+     * @return string
+     */
     public function getErrorDescription()
     {
         return $this->errorDescription;
     }
 
+    /**
+     * @return string
+     */
     public function getBankTransactionID()
     {
         return $this->bankTransactionId;
     }
 
+    /**
+     * @return string
+     */
     public function getTransactionResult()
     {
         return $this->transactionResult;
     }
 
+    /**
+     * @return string
+     */
     public function getAlertCode()
     {
         return $this->alertCode;
     }
 
+    /**
+     * @return string
+     */
     public function getAlertDescription()
     {
         return $this->alertDescription;
     }
 
+    /**
+     * @return string
+     */
     public function getEncryptedString()
     {
         return $this->encryptedString;
     }
 
-    public function setTransport($transport)
+    /**
+     * @param string $type
+     *
+     * @return GestPayCrypt
+     */
+    public function setTransport($type)
     {
-        $this->transport = $transport;
+        $this->transport = $type;
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getTransport()
     {
         return $this->transport;
     }
 
+    /**
+     * @param string $domain_name
+     *
+     * @return GestPayCrypt
+     */
     public function setDomainName($domain_name)
     {
         $this->domainName = $domain_name;
@@ -302,11 +508,22 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDomainName()
     {
+        if (true == $this->testEnv) {
+            return $this->testDomainName;
+        }
         return $this->domainName;
     }
 
+    /**
+     * @param string $port
+     *
+     * @return GestPayCrypt
+     */
     public function setPort($port)
     {
         $this->port = $port;
@@ -314,11 +531,19 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getPort()
     {
         return $this->port;
     }
 
+    /**
+     * @param string $script
+     *
+     * @return GestPayCrypt
+     */
     public function setScriptEncrypt($script)
     {
         $this->scriptEncrypt = $script;
@@ -326,6 +551,11 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @param string $script
+     *
+     * @return GestPayCrypt
+     */
     public function setScriptDecrypt($script)
     {
         $this->scriptDecrypt = $script;
@@ -333,53 +563,77 @@ class GestPayCrypt
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getPaymentUrl()
+    {
+        return $this->paymentUrl;
+    }
+
+    /**
+     * @param $url
+     * @return GestPayCrypt
+     */
+    public function setPaymentUrl($url)
+    {
+        $this->paymentUrl = $url;
+
+        return $this;
+    }
+
+    public function getRedirectUrl()
+    {
+        return 'https://' . $this->getDomainName() . $this->getPaymentUrl() .
+               '?a=' . $this->getShopLogin() .
+               '&b=' . $this->getEncryptedString();
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
     public function getScriptType($type)
     {
         if ($type == "crypt") {
             return $this->scriptEncrypt;
-        }
-        else {
+        } else {
             return $this->scriptDecrypt;
         }
     }
 
+    /**
+     * @return bool
+     */
     public function encrypt()
     {
-        $this->errorCode = "0";
-        $this->errorDescription = "";
+        $this->setError('0', '');
 
         if (empty($this->shopLogin)) {
-            $this->errorCode = "546";
-            $this->errorDescription = "ShopLogin not valid";
-
+            $this->setError('546', 'IDshop not valid');
             return false;
         }
 
         if (empty($this->currency)) {
-            $this->errorCode = "552";
-            $this->errorDescription = "Currency not valid";
-
+            $this->setError('552', 'Currency not valid');
             return false;
         }
 
         if (empty($this->amount)) {
-            $this->errorCode = "553";
-            $this->errorDescription = "Amount not valid";
-
+            $this->setError('553', 'Amount not valid');
             return false;
         }
 
         if (empty($this->shopTransactionId)) {
-            $this->errorCode = "551";
-            $this->errorDescription = "Shop Transaction ID not valid";
-
+            $this->setError('551', 'Shop Transaction ID not valid');
             return false;
         }
 
-        $response = $this->_httpGetResponse($this->shopLogin, $this->_getParsedEncryptArguments());
+        $response = $this->_httpGetResponse("crypt", $this->shopLogin, $this->_getParsedEncryptArguments());
 
         if ($response == -1) {
-            false;
+            return false;
         }
 
         $this->encryptedString = $this->_parseResponse("crypt", $response);
@@ -391,6 +645,9 @@ class GestPayCrypt
         return true;
     }
 
+    /**
+     * @return string
+     */
     private function _getParsedEncryptArguments()
     {
         $args = "";
@@ -411,37 +668,39 @@ class GestPayCrypt
 
         foreach ($vars as $name => $value) {
             if (!empty($value)) {
-                $args .= $name."=".$value.$this->separator;
+                $args .= $name . "=" . $value . $this->separator;
             }
         }
 
-        $args = substr($args, 0, - strlen($this->separator));
-        $args .= $this->customInfo;
-        $args = str_replace(" ", "�", $args);
+        $args = substr($args, 0, -strlen($this->separator));
+
+        if (strlen($this->customInfo) > 0) {
+            $args .= $this->separator . $this->getCustomInfo();
+        }
+
+        $args = str_replace(" ", chr(167), $args);
 
         return $args;
     }
 
+    /**
+     * @return bool
+     */
     public function decrypt()
     {
-        $this->errorCode = "0";
-        $this->errorDescription = "";
+        $this->setError('0', '');
 
         if (empty($this->shopLogin)) {
-            $this->errorCode = "546";
-            $this->errorDescription = "ShopLogin not valid";
-
+            $this->setError('546', 'IDshop not valid');
             return false;
         }
 
         if (empty($this->encryptedString)) {
-            $this->errorCode = "1009";
-            $this->errorDescription = "String to Decrypt not valid";
-
+            $this->setError('1009', 'String to Decrypt not valid');
             return false;
         }
 
-        $response = $this->_httpGetResponse($this->shopLogin, $this->encryptedString);
+        $response = $this->_httpGetResponse("decrypt", $this->shopLogin, $this->encryptedString);
 
         if ($response == -1) {
             false;
@@ -451,28 +710,32 @@ class GestPayCrypt
 
         if ($this->decrypted == -1) {
             return false;
-        }
-        elseif (empty($this->decrypted)) {
-            $this->errorCode = "9999";
-            $this->errorDescription = "Empty decrypted string";
-
+        } elseif (empty($this->decrypted)) {
+            $this->setError('9999', 'Empty decrypted string');
             return false;
         }
 
-        $this->decrypted = str_replace("�", " ", $this->decrypted);
+        $this->decrypted = str_replace(chr(167), " ", $this->decrypted);
 
         $this->_parseDecryptedData();
 
         return true;
     }
 
+    /**
+     * @param string $type
+     * @param string $a
+     * @param string $b
+     *
+     * @return string
+     */
     protected function _httpGetResponse($type, $a, $b)
     {
         $errno = "";
         $errstr = "";
 
         $socket = fsockopen(
-            $this->getTransport()."://".$this->getDomainName(),
+            $this->getTransport() . "://" . $this->getDomainName(),
             $this->getPort(),
             $errno,
             $errstr,
@@ -480,15 +743,17 @@ class GestPayCrypt
         );
 
         if (!$socket) {
-            $this->errorCode = "9999";
-            $this->errorDescription = "Impossible to connect to host: ".$host;
-
+            $this->setError(
+                '9999',
+                "Impossible to connect to: " .
+                $this->getTransport() . "://" . $this->getDomainName() . ':' . $this->getPort()
+            );
             return -1;
         }
 
-        $uri = $this->getScriptType($type)."?a=".$a."&b=".$b;
+        $uri = $this->getScriptType($type) . "?a=" . $a . "&b=" . $b;
 
-        fputs($socket, "GET ".$uri." HTTP/1.0\r\n\r\n");
+        fputs($socket, "GET " . $uri . " HTTP/1.0\r\n\r\n");
 
         while (fgets($socket, 4096) != "\r\n") {
             ;
@@ -501,31 +766,30 @@ class GestPayCrypt
         return $line;
     }
 
+    /**
+     * @param string $type
+     * @param string $response
+     *
+     * @return string
+     */
     private function _parseResponse($type, $response)
     {
-        $parsed = "";
         $matches = array();
 
-        if (preg_match("/#".$type."string#([\w\W]*)#\/".$type."string#/", $response, $matches)) {
+        if (preg_match("/#" . $type . "string#([\w\W]*)#\/" . $type . "string#/", $response, $matches)) {
             $parsed = trim($matches[1]);
-        }
-        elseif (preg_match("/#error#([\w\W]*)#\/error#/", $response, $matches)) {
+        } elseif (preg_match("/#error#([\w\W]*)#\/error#/", $response, $matches)) {
             $err = explode("-", $matches[1]);
 
             if (empty($err[0]) && empty($err[1])) {
-                $this->errorCode = "9999";
-                $this->errorDescription = "Unknown error";
-            }
-            else {
-                $this->errorCode = trim($err[0]);
-                $this->errorDescription = trim($err[1]);
+                $this->setError('9999', 'Unknown error');
+            } else {
+                $this->setError(trim($err[0]), trim($err[1]));
             }
 
             return -1;
-        }
-        else {
-            $this->errorCode = "9999";
-            $this->errorDescription = "Response from server not valid";
+        } else {
+            $this->setError('9999', 'Response from server not valid');
 
             return -1;
         }
@@ -542,66 +806,62 @@ class GestPayCrypt
 
             if (preg_match("/^PAY1_UICCODE/", $tagPAY1)) {
                 $this->currency = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_AMOUNT/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_AMOUNT/", $tagPAY1)) {
                 $this->amount = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_SHOPTRANSACTIONID/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_SHOPTRANSACTIONID/", $tagPAY1)) {
                 $this->shopTransactionId = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_CHNAME/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_CHNAME/", $tagPAY1)) {
                 $this->buyerName = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_CHEMAIL/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_CHEMAIL/", $tagPAY1)) {
                 $this->buyerEmail = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_AUTHORIZATIONCODE/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_AUTHORIZATIONCODE/", $tagPAY1)) {
                 $this->authorizationCode = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_ERRORCODE/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_ERRORCODE/", $tagPAY1)) {
                 $this->errorCode = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_ERRORDESCRIPTION/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_ERRORDESCRIPTION/", $tagPAY1)) {
                 $this->errorDescription = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_BANKTRANSACTIONID/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_BANKTRANSACTIONID/", $tagPAY1)) {
                 $this->bankTransactionId = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_ALERTCODE/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_ALERTCODE/", $tagPAY1)) {
                 $this->alertCode = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_ALERTDESCRIPTION/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_ALERTDESCRIPTION/", $tagPAY1)) {
                 $this->alertDescription = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_CARDNUMBER/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_CARDNUMBER/", $tagPAY1)) {
                 $this->cardNumber = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_EXPMONTH/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_EXPMONTH/", $tagPAY1)) {
                 $this->expMonth = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_EXPYEAR/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_EXPYEAR/", $tagPAY1)) {
                 $this->expYear = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_COUNTRY/", $tagPAY1)) {
-                $this->expYear = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_VBVRISP/", $tagPAY1)) {
-                $this->expYear = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_VBV/", $tagPAY1)) {
-                $this->expYear = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_IDLANGUAGE/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_COUNTRY/", $tagPAY1)) {
+                $this->country = $tagPAY1val[1];
+            } elseif (preg_match("/^PAY1_VBVRISP/", $tagPAY1)) {
+                $this->vbvRisp = $tagPAY1val[1];
+            } elseif (preg_match("/^PAY1_VBV/", $tagPAY1)) {
+                $this->vbv = $tagPAY1val[1];
+            } elseif (preg_match("/^PAY1_IDLANGUAGE/", $tagPAY1)) {
                 $this->language = $tagPAY1val[1];
-            }
-            elseif (preg_match("/^PAY1_TRANSACTIONRESULT/", $tagPAY1)) {
+            } elseif (preg_match("/^PAY1_TRANSACTIONRESULT/", $tagPAY1)) {
                 $this->transactionResult = $tagPAY1val[1];
-            }
-            else {
-                $this->customInfo .= $tagPAY1.$this->separator;
+            } elseif (preg_match("/^PAY1_3DLEVEL/", $tagPAY1)) {
+                $this->threeDLevel = $tagPAY1val[1];
+            } else {
+                $this->customInfo .= $tagPAY1 . $this->separator;
             }
         }
 
-        $this->customInfo = substr($this->customInfo, 0, - strlen($this->separator));
+        $this->customInfo = substr($this->customInfo, 0, -strlen($this->separator));
+    }
+
+    /**
+     * @param string $errorCode
+     * @param string $errorDescription
+     * @return GestPayCrypt
+     */
+    protected function setError($errorCode, $errorDescription)
+    {
+        $this->errorCode = $errorCode;
+        $this->errorDescription = $errorDescription;
+
+        return $this;
     }
 }

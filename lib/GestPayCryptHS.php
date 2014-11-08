@@ -29,13 +29,13 @@
 
 class GestPayCryptHS extends GestPayCrypt
 {
-    private $curl_bin;
+    private $curlBin;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->curl_bin = "/usr/bin/curl";
+        $this->curlBin = "/usr/bin/curl";
 
         $this->setTransport("ssl");
         $this->setDomainName("ecomm.sella.it");
@@ -44,15 +44,37 @@ class GestPayCryptHS extends GestPayCrypt
         $this->setScriptDecrypt("/CryptHTTPS/Decrypt.asp");
     }
 
+    /**
+     * @return string
+     */
+    public function getCurlBin()
+    {
+        return $this->curlBin;
+    }
+
+    /**
+     * @param string $curlBin
+     *
+     * @return GestPayCryptHS
+     */
+    public function setCurlBin($curlBin)
+    {
+        $this->curlBin = $curlBin;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function _httpGetResponse($type, $a, $b)
     {
         if (extension_loaded("openssl")) {
-            return parent::_http_get_response($type, $a, $b);
-        }
-        elseif (extension_loaded("curl")) {
-            $uri = $this->getScriptType($type)."?a=".$a."&b=".$b;
+            return parent::_httpGetResponse($type, $a, $b);
+        } elseif (extension_loaded("curl")) {
+            $uri = $this->getScriptType($type) . "?a=" . $a . "&b=" . $b;
 
-            $curl = curl_init("https://".$this->getDomainName().$uri);
+            $curl = curl_init("https://" . $this->getDomainName() . $uri);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             $tmp = curl_exec($curl);
             curl_close($curl);
@@ -60,26 +82,21 @@ class GestPayCryptHS extends GestPayCrypt
             $lines = explode("\n", $tmp);
 
             return $lines[0];
-        }
-        else {
-            $uri = $this->getScriptType($type)."?a=".$a."&b=".$b;
+        } else {
+            $uri = $this->getScriptType($type) . "?a=" . $a . "&b=" . $b;
 
-            $exec_str = $this->curl_bin." -s -m 120 -L ".
-                        escapeshellarg("https://".$this->getDomainName().$uri);
+            $exec_str = $this->getCurlBin() . " -s -m 120 -L " .
+                        escapeshellarg("https://" . $this->getDomainName() . $uri);
 
             exec($exec_str, $ret_arr, $ret_num);
 
             if ($ret_num != 0) {
-                $this->errorCode = "9999";
-                $this->errorDescription = "Error while executing: ".$exec_str;
-
+                $this->setError('9999', 'Error while executing: ' . $exec_str);
                 return -1;
             }
 
             if (!is_array($ret_arr)) {
-                $this->errorCode = "9999";
-                $this->errorDescription = "Error while executing: ".$exec_str." - "."\$ret_arr is not an array";
-
+                $this->setError('9999', 'Error while executing: ' . $exec_str. ' - $ret_arr is not an array');
                 return -1;
             }
 
