@@ -513,9 +513,10 @@ class GestPayCrypt
      */
     public function getDomainName()
     {
-        if (true == $this->testEnv) {
+        if ($this->testEnv === true) {
             return $this->testDomainName;
         }
+
         return $this->domainName;
     }
 
