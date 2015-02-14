@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/asterixcapri/gestpaycrypt/v/stable.svg)](https://packagist.org/packages/asterixcapri/gestpaycrypt) [![Total Downloads](https://poser.pugx.org/asterixcapri/gestpaycrypt/downloads.svg)](https://packagist.org/packages/asterixcapri/gestpaycrypt) [![License](https://poser.pugx.org/asterixcapri/gestpaycrypt/license.svg)](https://packagist.org/packages/asterixcapri/gestpaycrypt)
+
 GestPayCrypt-PHP
 ================
 
