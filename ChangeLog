@@ -1,3 +1,7 @@
+2015-02-14 aleast@capri.it
+  * Aggiunto pacchetto in packagist e composer
+  * Reso compatibile con coding standard PSR-1
+
 2004-12-20 aleast@capri.it
 	* Migliorata sicurezza di GestPayCryptHS::HttpGetLine()
 	* Corretti i file di esempio e aggiornati gli esempi di banca sella
