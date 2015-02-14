@@ -2,7 +2,7 @@
 
 /*
  * GestPayCrypt-PHP
- * Copyright (C) 2001-2011 Alessandro Astarita <aleast@capri.it>
+ * Copyright (C) 2001-2015 Alessandro Astarita <aleast@capri.it>
  *
  * http://github.com/asterixcapri/gestpaycrypt-php
  *
