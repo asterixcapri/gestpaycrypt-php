@@ -26,8 +26,8 @@
  *
  */
 
-class GestPayCryptWS {
-
+class GestPayCryptWS
+{
     private $context;
     private $shopLogin;
     private $currency;
@@ -62,7 +62,8 @@ class GestPayCryptWS {
     private $threeDLevel;
     private $testEnv;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->shopLogin = "";
         $this->currency = "";
         $this->amount = "";
@@ -77,129 +78,157 @@ class GestPayCryptWS {
         $this->setContext();
     }
 
-    public function setTestEnv($enable) {
+    public function setTestEnv($enable)
+    {
         $this->testEnv = $enable;
         return $this;
     }
 
-    public function getTestEnv() {
+    public function getTestEnv()
+    {
         return $this->testEnv;
     }
 
-    public function setShopLogin($val) {
+    public function setShopLogin($val)
+    {
         $this->shopLogin = $val;
         return $this;
     }
 
-    public function getShopLogin() {
+    public function getShopLogin()
+    {
         return $this->shopLogin;
     }
 
-    public function setCurrency($val) {
+    public function setCurrency($val)
+    {
         $this->currency = $val;
         return $this;
     }
 
-    public function getCurrency() {
+    public function getCurrency()
+    {
         return $this->currency;
     }
 
-    public function setAmount($val) {
+    public function setAmount($val)
+    {
         $this->amount = $val;
         return $this;
     }
 
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function setShopTransactionID($val) {
+    public function setShopTransactionID($val)
+    {
         $this->shopTransactionId = urlencode(trim($val));
         return $this;
     }
 
-    public function getShopTransactionID() {
+    public function getShopTransactionID()
+    {
         return urldecode($this->shopTransactionId);
     }
 
-    public function setCardNumber($val) {
+    public function setCardNumber($val)
+    {
         $this->cardNumber = $val;
         return $this;
     }
 
-    public function getCardNumber() {
+    public function getCardNumber()
+    {
         return $this->cardNumber;
     }
 
-    public function setExpMonth($val) {
+    public function setExpMonth($val)
+    {
         $this->expMonth = $val;
         return $this;
     }
 
-    public function getExpMonth() {
+    public function getExpMonth()
+    {
         return $this->expMonth;
     }
 
-    public function setExpYear($val) {
+    public function setExpYear($val)
+    {
         $this->expYear = $val;
         return $this;
     }
 
-    public function getExpYear() {
+    public function getExpYear()
+    {
         return $this->expYear;
     }
 
-    public function setMin($val) {
+    public function setMin($val)
+    {
         $this->min = $val;
         return $this;
     }
 
-    public function getMin() {
+    public function getMin()
+    {
         return $this->min;
     }
 
-    public function setCvv($val) {
+    public function setCvv($val)
+    {
         $this->cvv = $val;
         return $this;
     }
 
-    public function getCvv() {
+    public function getCvv()
+    {
         return $this->cvv;
     }
 
-    public function setBuyerName($val) {
+    public function setBuyerName($val)
+    {
         $this->buyerName = urlencode(trim($val));
         return $this;
     }
 
-    public function getBuyerName() {
+    public function getBuyerName()
+    {
         return urldecode($this->buyerName);
     }
 
-    public function setBuyerEmail($val) {
+    public function setBuyerEmail($val)
+    {
         $this->buyerEmail = trim($val);
         return $this;
     }
 
-    public function getBuyerEmail() {
+    public function getBuyerEmail()
+    {
         return $this->buyerEmail;
     }
 
-    public function setLanguage($val) {
+    public function setLanguage($val)
+    {
         $this->language = trim($val);
         return $this;
     }
 
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $this->language;
     }
 
-    public function setCustomInfo($val) {
+    public function setCustomInfo($val)
+    {
         $this->customInfo = urlencode(trim($val));
         return $this;
     }
 
-    public function getCustomInfo() {
+    public function getCustomInfo()
+    {
         return urldecode($this->customInfo);
     }
 
@@ -207,15 +236,18 @@ class GestPayCryptWS {
      * @param array $arrval
      * @return GestPayCrypt|bool
      */
-    public function setCustomInfoFromArray(array $arrval) {
+    public function setCustomInfoFromArray(array $arrval)
+    {
         if (!is_array($arrval)) {
             return false;
         }
+
         //check string validity
         foreach ($arrval as $key => $val) {
             if (strlen($val) > 300) {
                 $val = substr($val, 0, 300);
             }
+
             $arrval[$key] = urlencode($val);
         }
 
@@ -224,9 +256,11 @@ class GestPayCryptWS {
         return $this;
     }
 
-    public function getCustomInfoToArray() {
+    public function getCustomInfoToArray()
+    {
         $allinfo = explode($this->separator, $this->customInfo);
         $customInfoArray = array();
+
         foreach ($allinfo as $singleInfo) {
             $tagval = explode("=", $singleInfo);
             $customInfoArray[$tagval[0]] = urldecode($tagval[1]);
@@ -235,57 +269,69 @@ class GestPayCryptWS {
         return $customInfoArray;
     }
 
-    public function setEncryptedString($val) {
+    public function setEncryptedString($val)
+    {
         $this->encryptedString = $val;
         return $this;
     }
 
-    public function getEncryptedString() {
+    public function getEncryptedString()
+    {
         return $this->encryptedString;
     }
 
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
 
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
-    public function setVbv($vbv) {
+    public function setVbv($vbv)
+    {
         $this->vbv = $vbv;
         return $this;
     }
 
-    public function getVbv() {
+    public function getVbv()
+    {
         return $this->vbv;
     }
 
-    public function setVbvRisp($vbvRisp) {
+    public function setVbvRisp($vbvRisp)
+    {
         $this->vbvRisp = $vbvRisp;
         return $this;
     }
 
-    public function getVbvRisp() {
+    public function getVbvRisp()
+    {
         return $this->vbvRisp;
     }
 
-    public function set3dLevel($val) {
+    public function set3dLevel($val)
+    {
         $this->threeDLevel = $val;
         return $this;
     }
 
-    public function get3dLevel() {
+    public function get3dLevel()
+    {
         return $this->threeDLevel;
     }
 
-    public function setAuthorizationCode($val) {
+    public function setAuthorizationCode($val)
+    {
         $this->authorizationCode = $val;
         return $this;
     }
 
-    public function getAuthorizationCode() {
+    public function getAuthorizationCode()
+    {
         return $this->authorizationCode;
     }
 
@@ -294,96 +340,116 @@ class GestPayCryptWS {
      * @param string $errorDescription
      * @return GestPayCrypt
      */
-    protected function setError($errorCode, $errorDescription) {
+    protected function setError($errorCode, $errorDescription)
+    {
         $this->errorCode = $errorCode;
         $this->errorDescription = $errorDescription;
         return $this;
     }
 
-    public function getErrorCode() {
+    public function getErrorCode()
+    {
         return $this->errorCode;
     }
 
-    public function getErrorDescription() {
+    public function getErrorDescription()
+    {
         return $this->errorDescription;
     }
 
-    public function setBankTransactionID($val) {
+    public function setBankTransactionID($val)
+    {
         $this->bankTransactionId = urlencode(trim($val));
         return $this;
     }
 
-    public function getBankTransactionID() {
+    public function getBankTransactionID()
+    {
         return $this->bankTransactionId;
     }
 
-    public function setTransactionResult($val) {
+    public function setTransactionResult($val)
+    {
         $this->transactionResult = $val;
         return $this;
     }
 
-    public function getTransactionResult() {
+    public function getTransactionResult()
+    {
         return $this->transactionResult;
     }
 
-    public function setAlertCode($alertCode) {
+    public function setAlertCode($alertCode)
+    {
         $this->alertCode = $alertCode;
         return $this;
     }
 
-    public function getAlertCode() {
+    public function getAlertCode()
+    {
         return $this->alertCode;
     }
 
-    public function setAlertDescription($alertDescription) {
+    public function setAlertDescription($alertDescription)
+    {
         $this->alertDescription = $alertDescription;
         return true;
     }
 
-    public function getAlertDescription() {
+    public function getAlertDescription()
+    {
         return $this->alertDescription;
     }
 
-    public function setTransport($type) {
+    public function setTransport($type)
+    {
         $this->transport = $type;
         return $this;
     }
 
-    public function getTransport() {
+    public function getTransport()
+    {
         return $this->transport;
     }
 
-    public function getDomainName() {
+    public function getDomainName()
+    {
         if ($this->testEnv === true) {
             return $this->testDomainName;
         }
         return $this->domainName;
     }
 
-    public function getPaymentUrl() {
+    public function getPaymentUrl()
+    {
         return $this->paymentUrl;
     }
 
-    public function setPaymentUrl($url) {
+    public function setPaymentUrl($url)
+    {
         $this->paymentUrl = $url;
         return $this;
     }
 
-    public function setSeparator($separator) {
+    public function setSeparator($separator)
+    {
         $this->separator = $separator;
         return $this;
     }
 
-    public function getSeparator() {
+    public function getSeparator()
+    {
         return $this->separator;
     }
 
-    public function setDecrypted($decrypted) {
+    public function setDecrypted($decrypted)
+    {
         $this->decrypted = $decrypted;
         return $this;
     }
 
-    public function getDecrypted() {
+    public function getDecrypted()
+    {
         return $this->decrypted;
     }
 
@@ -391,13 +457,14 @@ class GestPayCryptWS {
      * @param string $ciphers allowed chipers
      * @return \GestPayCrypt
      */
-    public function setContext($ciphers = 'DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA:KRB5-DES-CBC3-MD5:KRB5-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:EDH-DSS-DES-CBC3-SHA:DES-CBC3-SHA:DES-CBC3-MD5:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:AES128-SHA:RC2-CBC-MD5:KRB5-RC4-MD5:KRB5-RC4-SHA:RC4-SHA:RC4-MD5:RC4-MD5:KRB5-DES-CBC-MD5:KRB5-DES-CBC-SHA:EDH-RSA-DES-CBC-SHA:EDH-DSS-DES-CBC-SHA:DES-CBC-SHA:DES-CBC-MD5:EXP-KRB5-RC2-CBC-MD5:EXP-KRB5-DES-CBC-MD5:EXP-KRB5-RC2-CBC-SHA:EXP-KRB5-DES-CBC-SHA:EXP-EDH-RSA-DES-CBC-SHA:EXP-EDH-DSS-DES-CBC-SHA:EXP-DES-CBC-SHA:EXP-RC2-CBC-MD5:EXP-RC2-CBC-MD5:EXP-KRB5-RC4-MD5:EXP-KRB5-RC4-SHA:EXP-RC4-MD5:EXP-RC4-MD5') {
+    public function setContext($ciphers = 'DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA:KRB5-DES-CBC3-MD5:KRB5-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:EDH-DSS-DES-CBC3-SHA:DES-CBC3-SHA:DES-CBC3-MD5:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:AES128-SHA:RC2-CBC-MD5:KRB5-RC4-MD5:KRB5-RC4-SHA:RC4-SHA:RC4-MD5:RC4-MD5:KRB5-DES-CBC-MD5:KRB5-DES-CBC-SHA:EDH-RSA-DES-CBC-SHA:EDH-DSS-DES-CBC-SHA:DES-CBC-SHA:DES-CBC-MD5:EXP-KRB5-RC2-CBC-MD5:EXP-KRB5-DES-CBC-MD5:EXP-KRB5-RC2-CBC-SHA:EXP-KRB5-DES-CBC-SHA:EXP-EDH-RSA-DES-CBC-SHA:EXP-EDH-DSS-DES-CBC-SHA:EXP-DES-CBC-SHA:EXP-RC2-CBC-MD5:EXP-RC2-CBC-MD5:EXP-KRB5-RC4-MD5:EXP-KRB5-RC4-SHA:EXP-RC4-MD5:EXP-RC4-MD5')
+    {
         $this->context = stream_context_create(
-                        [
-                                'ssl' => [
-                                        'ciphers' => $ciphers
-                                ],
-                        ]
+            [
+                'ssl' => [
+                        'ciphers' => $ciphers
+                ]
+            ]
         );
 
         return $this;
@@ -406,7 +473,8 @@ class GestPayCryptWS {
     /**
      * @return A stream context resource.
      */
-    public function getContext() {
+    public function getContext()
+    {
         return $this->context;
     }
 
@@ -414,26 +482,29 @@ class GestPayCryptWS {
      *
      * @return string
      */
-    public function getRedirectUrl() {
+    public function getRedirectUrl()
+    {
         return 'https://' . $this->getDomainName() . $this->getPaymentUrl() .
-                        '?a=' . $this->getShopLogin() .
-                        '&b=' . $this->getEncryptedString();
+            '?a=' . $this->getShopLogin() .
+            '&b=' . $this->getEncryptedString();
     }
 
     /**
      * Genera la URL del WSDL
      * @return string
      */
-    private function getWsdl() {
+    private function getWsdl()
+    {
         return 'https://' . $this->getDomainName() .
-                        '/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL';
+            '/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL';
     }
 
     /**
      * Genera l'array dei parametri per l'encrypt
      * @return array
      */
-    private function getEncParams() {
+    private function getEncParams()
+    {
         // Parametri obbligatori
         $params = array(
                 'shopLogin' => $this->shopLogin,
@@ -443,6 +514,7 @@ class GestPayCryptWS {
         );
 
         $params = array_merge($params, $this->getOptParams());
+
         return $params;
     }
 
@@ -450,7 +522,8 @@ class GestPayCryptWS {
      * Genera l'array dei parametri per il decrypt
      * @return array
      */
-    private function getDecParams() {
+    private function getDecParams()
+    {
         // Parametri obbligatori
         $params = array(
                 'shopLogin' => $this->shopLogin,
@@ -466,13 +539,15 @@ class GestPayCryptWS {
      * @todo Gestire parametri opzionali
      * @return array
      */
-    private function getOptParams() {
+    private function getOptParams()
+    {
         $params = array();
 
         // Parametri opzionali
         if (isset($this->buyerName)) {
             $params['buyerName'] = $this->buyerName;
         }
+
         if (isset($this->buyerEmail)) {
             $params['buyerEmail'] = $this->buyerEmail;
         }
@@ -483,8 +558,9 @@ class GestPayCryptWS {
     /**
      * @return bool
      */
-    public function encrypt() {
-        $retVal = FALSE;
+    public function encrypt()
+    {
+        $retVal = false;
         $this->setError('0', '');
 
         if (empty($this->shopLogin)) {
@@ -515,7 +591,7 @@ class GestPayCryptWS {
         // Leggo l'output
         $res = new SimpleXMLElement($objectresult->EncryptResult->any);
 
-        if ($res !== FALSE) {
+        if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
             $TransactionResult = (string) $res->TransactionResult;
@@ -540,8 +616,9 @@ class GestPayCryptWS {
     /**
      * @return bool
      */
-    public function decrypt() {
-        $retVal = FALSE;
+    public function decrypt()
+    {
+        $retVal = false;
         $this->setError('0', '');
 
         if (empty($this->shopLogin)) {
@@ -562,7 +639,7 @@ class GestPayCryptWS {
         // Leggo l'output
         $res = new SimpleXMLElement($objectresult->DecryptResult->any);
 
-        if ($res !== FALSE) {
+        if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
             $TransactionResult = (string) $res->TransactionResult;
@@ -588,5 +665,4 @@ class GestPayCryptWS {
 
         return $retVal;
     }
-
 }
