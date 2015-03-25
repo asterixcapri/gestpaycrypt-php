@@ -658,13 +658,13 @@ class GestPayCryptWS
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
 						
-						$this->setShopTransactionID((string) $res->ShopTransactionID);
-						$this->setBankTransactionID((string) $res->BankTransactionID);
-						$this->setAuthorizationCode((string) $res->AuthorizationCode);
-						$this->setCurrency((int) $res->Currency);
-						$this->setAmount((float) $res->Amount);
-						$this->setCustomInfo((string) $res->CustomInfo);
-						$this->setDecrypted((string) $res->asXML());
+            $this->setShopTransactionID((string) $res->ShopTransactionID);
+            $this->setBankTransactionID((string) $res->BankTransactionID);
+            $this->setAuthorizationCode((string) $res->AuthorizationCode);
+            $this->setCurrency((int) $res->Currency);
+            $this->setAmount((float) $res->Amount);
+            $this->setCustomInfo((string) $res->CustomInfo);
+            $this->setDecrypted((string) $res->asXML());
 
             if ($ErrorCode == 0) {
                 // Decrypted
