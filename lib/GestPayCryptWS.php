@@ -646,7 +646,7 @@ class GestPayCryptWS
 
         // Leggo l'output
         $res = new SimpleXMLElement($objectresult->DecryptResult->any);
-
+				
         if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
@@ -657,16 +657,17 @@ class GestPayCryptWS
             // Gestione degli errori
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
+						
+						$this->setShopTransactionID((string) $res->ShopTransactionID);
+						$this->setBankTransactionID((string) $res->BankTransactionID);
+						$this->setAuthorizationCode((string) $res->AuthorizationCode);
+						$this->setCurrency((int) $res->Currency);
+						$this->setAmount((float) $res->Amount);
+						$this->setCustomInfo((string) $res->CustomInfo);
+						$this->setDecrypted((string) $res->asXML());
 
             if ($ErrorCode == 0) {
                 // Decrypted
-                $this->setShopTransactionID((string) $res->ShopTransactionID);
-                $this->setBankTransactionID((string) $res->BankTransactionID);
-                $this->setAuthorizationCode((string) $res->AuthorizationCode);
-                $this->setCurrency((int) $res->Currency);
-                $this->setAmount((float) $res->Amount);
-                $this->setCustomInfo((string) $res->CustomInfo);
-                $this->setDecrypted((string) $res->CryptDecryptString);
                 $retVal = TRUE;
             }
         }
