@@ -70,7 +70,7 @@ class GestPayCryptWS
         $this->shopTransactionId = "";
 
         $this->testEnv = false;
-        $this->domainName = "ecomm.sella.it";
+        $this->domainName = "ecommS2S.sella.it";
         $this->testDomainName = "testecomm.sella.it";
         $this->paymentUrl = "/pagam/pagam.aspx";
         $this->separator = "*P1*";
