@@ -507,10 +507,10 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->shopLogin,
-                'uicCode' => $this->currency,
-                'amount' => $this->amount,
-                'shopTransactionId' => $this->shopTransactionId,
+                'shopLogin' => $this->getShopLogin(),
+                'uicCode' => $this->getCurrency(),
+                'amount' => $this->getAmount(),
+                'shopTransactionId' => $this->getShopTransactionID(),
         );
 
         $params = array_merge($params, $this->getOptParams());
@@ -526,8 +526,8 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->shopLogin,
-                'CryptedString' => $this->encryptedString,
+                'shopLogin' => $this->getShopLogin(),
+                'CryptedString' => $this->getEncryptedString(),
         );
 
         $params = array_merge($params, $this->getOptParams());
@@ -545,13 +545,21 @@ class GestPayCryptWS
 
         // Parametri opzionali
         if (isset($this->buyerName)) {
-            $params['buyerName'] = $this->buyerName;
+            $params['buyerName'] = $this->getBuyerName();
         }
 
         if (isset($this->buyerEmail)) {
-            $params['buyerEmail'] = $this->buyerEmail;
+            $params['buyerEmail'] = $this->getBuyerEmail();
         }
-
+        
+		if (isset($this->language)) {
+            $params['languageId'] = $this->getLanguage();
+        }
+        
+        if (isset($this->customInfo)) {
+            $params['customInfo'] = $this->getCustomInfo();
+        }
+        
         return $params;
     }
 
