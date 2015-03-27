@@ -70,7 +70,7 @@ class GestPayCryptWS
         $this->shopTransactionId = "";
 
         $this->testEnv = false;
-        $this->domainName = "ecomm.sella.it";
+        $this->domainName = "ecommS2S.sella.it";
         $this->testDomainName = "testecomm.sella.it";
         $this->paymentUrl = "/pagam/pagam.aspx";
         $this->separator = "*P1*";
@@ -507,10 +507,10 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->shopLogin,
-                'uicCode' => $this->currency,
-                'amount' => $this->amount,
-                'shopTransactionId' => $this->shopTransactionId,
+                'shopLogin' => $this->getShopLogin(),
+                'uicCode' => $this->getCurrency(),
+                'amount' => $this->getAmount(),
+                'shopTransactionId' => $this->getShopTransactionID(),
         );
 
         $params = array_merge($params, $this->getOptParams());
@@ -526,8 +526,8 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->shopLogin,
-                'CryptedString' => $this->encryptedString,
+                'shopLogin' => $this->getShopLogin(),
+                'CryptedString' => $this->getEncryptedString(),
         );
 
         $params = array_merge($params, $this->getOptParams());
@@ -545,13 +545,21 @@ class GestPayCryptWS
 
         // Parametri opzionali
         if (isset($this->buyerName)) {
-            $params['buyerName'] = $this->buyerName;
+            $params['buyerName'] = $this->getBuyerName();
         }
 
         if (isset($this->buyerEmail)) {
-            $params['buyerEmail'] = $this->buyerEmail;
+            $params['buyerEmail'] = $this->getBuyerEmail();
         }
-
+        
+		if (isset($this->language)) {
+            $params['languageId'] = $this->getLanguage();
+        }
+        
+        if (isset($this->customInfo)) {
+            $params['customInfo'] = $this->getCustomInfo();
+        }
+        
         return $params;
     }
 
@@ -638,7 +646,7 @@ class GestPayCryptWS
 
         // Leggo l'output
         $res = new SimpleXMLElement($objectresult->DecryptResult->any);
-
+				
         if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
@@ -649,16 +657,17 @@ class GestPayCryptWS
             // Gestione degli errori
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
+						
+            $this->setShopTransactionID((string) $res->ShopTransactionID);
+            $this->setBankTransactionID((string) $res->BankTransactionID);
+            $this->setAuthorizationCode((string) $res->AuthorizationCode);
+            $this->setCurrency((int) $res->Currency);
+            $this->setAmount((float) $res->Amount);
+            $this->setCustomInfo((string) $res->CustomInfo);
+            $this->setDecrypted((string) $res->asXML());
 
             if ($ErrorCode == 0) {
                 // Decrypted
-                $this->setShopTransactionID((string) $res->ShopTransactionID);
-                $this->setBankTransactionID((string) $res->BankTransactionID);
-                $this->setAuthorizationCode((string) $res->AuthorizationCode);
-                $this->setCurrency((int) $res->Currency);
-                $this->setAmount((float) $res->Amount);
-                $this->setCustomInfo((string) $res->CustomInfo);
-                $this->setDecrypted((string) $res->CryptDecryptString);
                 $retVal = TRUE;
             }
         }
