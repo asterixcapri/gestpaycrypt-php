@@ -1,8 +1,6 @@
 <?php
-require_once "../lib/GestPayCryptWS.php";
 
-$_GET['a'] = 'SHOP ID';
-$_GET['b'] = 'ENCRYPTED STRING';
+require_once "../lib/GestPayCryptWS.php";
 
 if (empty($_GET["a"])) {
     throw new Exception("Parametro mancante: 'a'");
@@ -18,7 +16,7 @@ $gestpay->setEncryptedString($_GET["b"]);
 
 if (!$gestpay->decrypt()) {
     throw new Exception(
-    "Error [" . $gestpay->getErrorCode() . "]: " . $gestpay->getErrorDescription()
+        "Error [" . $gestpay->getErrorCode() . "]: " . $gestpay->getErrorDescription()
     );
 }
 
