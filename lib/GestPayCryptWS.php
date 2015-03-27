@@ -234,7 +234,7 @@ class GestPayCryptWS
 
     /**
      * @param array $arrval
-     * @return GestPayCrypt|bool
+     * @return GestPayCryptWS|bool
      */
     public function setCustomInfoFromArray(array $arrval)
     {
@@ -338,7 +338,7 @@ class GestPayCryptWS
     /**
      * @param string $errorCode
      * @param string $errorDescription
-     * @return GestPayCrypt
+     * @return GestPayCryptWS
      */
     protected function setError($errorCode, $errorDescription)
     {
@@ -417,6 +417,7 @@ class GestPayCryptWS
         if ($this->testEnv === true) {
             return $this->testDomainName;
         }
+
         return $this->domainName;
     }
 
@@ -455,7 +456,7 @@ class GestPayCryptWS
 
     /**
      * @param string $ciphers allowed chipers
-     * @return \GestPayCrypt
+     * @return GestPayCryptWS
      */
     public function setContext($ciphers = 'DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA:KRB5-DES-CBC3-MD5:KRB5-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:EDH-DSS-DES-CBC3-SHA:DES-CBC3-SHA:DES-CBC3-MD5:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:AES128-SHA:RC2-CBC-MD5:KRB5-RC4-MD5:KRB5-RC4-SHA:RC4-SHA:RC4-MD5:RC4-MD5:KRB5-DES-CBC-MD5:KRB5-DES-CBC-SHA:EDH-RSA-DES-CBC-SHA:EDH-DSS-DES-CBC-SHA:DES-CBC-SHA:DES-CBC-MD5:EXP-KRB5-RC2-CBC-MD5:EXP-KRB5-DES-CBC-MD5:EXP-KRB5-RC2-CBC-SHA:EXP-KRB5-DES-CBC-SHA:EXP-EDH-RSA-DES-CBC-SHA:EXP-EDH-DSS-DES-CBC-SHA:EXP-DES-CBC-SHA:EXP-RC2-CBC-MD5:EXP-RC2-CBC-MD5:EXP-KRB5-RC4-MD5:EXP-KRB5-RC4-SHA:EXP-RC4-MD5:EXP-RC4-MD5')
     {
@@ -609,7 +610,7 @@ class GestPayCryptWS
             if ($ErrorCode == 0) {
                 // Imposto la stringa criptata
                 $this->setEncryptedString($EncryptedString);
-                $retVal = TRUE;
+                $retVal = true;
             }
         }
 
@@ -663,7 +664,7 @@ class GestPayCryptWS
 
             if ($ErrorCode == 0) {
                 // Decrypted
-                $retVal = TRUE;
+                $retVal = true;
             }
         }
 
