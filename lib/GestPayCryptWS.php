@@ -459,12 +459,11 @@ class GestPayCryptWS
      */
     public function setContext($ciphers = 'DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA:KRB5-DES-CBC3-MD5:KRB5-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:EDH-DSS-DES-CBC3-SHA:DES-CBC3-SHA:DES-CBC3-MD5:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:AES128-SHA:RC2-CBC-MD5:KRB5-RC4-MD5:KRB5-RC4-SHA:RC4-SHA:RC4-MD5:RC4-MD5:KRB5-DES-CBC-MD5:KRB5-DES-CBC-SHA:EDH-RSA-DES-CBC-SHA:EDH-DSS-DES-CBC-SHA:DES-CBC-SHA:DES-CBC-MD5:EXP-KRB5-RC2-CBC-MD5:EXP-KRB5-DES-CBC-MD5:EXP-KRB5-RC2-CBC-SHA:EXP-KRB5-DES-CBC-SHA:EXP-EDH-RSA-DES-CBC-SHA:EXP-EDH-DSS-DES-CBC-SHA:EXP-DES-CBC-SHA:EXP-RC2-CBC-MD5:EXP-RC2-CBC-MD5:EXP-KRB5-RC4-MD5:EXP-KRB5-RC4-SHA:EXP-RC4-MD5:EXP-RC4-MD5')
     {
-        $opts = array(
-            'ssl'=>array(
-                'ciphers'=>$ciphers
+        $this->context = stream_context_create(array(
+            'ssl' => array(
+                'ciphers' => $ciphers
             )
-        );
-        $this->context = stream_context_create($opts);
+        ));
 
         return $this;
     }
@@ -506,15 +505,13 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->getShopLogin(),
-                'uicCode' => $this->getCurrency(),
-                'amount' => $this->getAmount(),
-                'shopTransactionId' => $this->getShopTransactionID(),
+            'shopLogin' => $this->getShopLogin(),
+            'uicCode' => $this->getCurrency(),
+            'amount' => $this->getAmount(),
+            'shopTransactionId' => $this->getShopTransactionID(),
         );
 
-        $params = array_merge($params, $this->getOptParams());
-
-        return $params;
+        return array_merge($params, $this->getOptParams());
     }
 
     /**
@@ -525,12 +522,11 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->getShopLogin(),
-                'CryptedString' => $this->getEncryptedString(),
+            'shopLogin' => $this->getShopLogin(),
+            'CryptedString' => $this->getEncryptedString(),
         );
 
-        $params = array_merge($params, $this->getOptParams());
-        return $params;
+        return array_merge($params, $this->getOptParams());
     }
 
     /**
@@ -550,15 +546,15 @@ class GestPayCryptWS
         if (isset($this->buyerEmail)) {
             $params['buyerEmail'] = $this->getBuyerEmail();
         }
-        
-		if (isset($this->language)) {
+
+        if (isset($this->language)) {
             $params['languageId'] = $this->getLanguage();
         }
-        
+
         if (isset($this->customInfo)) {
             $params['customInfo'] = $this->getCustomInfo();
         }
-        
+
         return $params;
     }
 
@@ -645,7 +641,7 @@ class GestPayCryptWS
 
         // Leggo l'output
         $res = new SimpleXMLElement($objectresult->DecryptResult->any);
-				
+
         if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
@@ -656,7 +652,7 @@ class GestPayCryptWS
             // Gestione degli errori
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
-						
+
             $this->setShopTransactionID((string) $res->ShopTransactionID);
             $this->setBankTransactionID((string) $res->BankTransactionID);
             $this->setAuthorizationCode((string) $res->AuthorizationCode);
