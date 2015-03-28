@@ -15,6 +15,15 @@ Le vecchie classi GestPayCrypt e GestPayCryptHS sono deprecate e vanno
 sostituite con la nuova GestPayCryptWS.
 
 
+Installazione
+-------------
+
+Puoi installare questa libreria utilizzando `composer`:
+
+```
+composer require 'asterixcapri/gestpaycrypt-php@~3.0'
+```
+
 Links
 -----
 
