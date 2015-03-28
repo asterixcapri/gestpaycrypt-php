@@ -1,13 +1,18 @@
 {
     "name": "asterixcapri/gestpaycrypt",
-    "description": "PHP implementation of GestPayCrypt and GestPayCryptHS classes by Bancasella to use with GestPay online payment.",
-    "version": "2.1.0",
+    "description": "PHP library for GestPay payment gateway.",
+    "keywords": ["gestpay", "bancasella", "payment", "e-commerce"],
+    "version": "3.0.0",
     "minimum-stability": "stable",
     "license": "LGPL-2.1",
     "authors": [
         {
             "name": "Alessandro Astarita",
             "email": "aleast@capri.it"
+        },
+        {
+            "name": "Gabriele Brosulo",
+            "email": "gabriele@brosulo.net"
         }
     ],
     "autoload": {

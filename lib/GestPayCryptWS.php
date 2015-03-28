@@ -2,7 +2,8 @@
 
 /*
  * GestPayCryptWS
- * Copyright (C) 2001-2015 Gabriele Brosulo <gabriele@brosulo.net>
+ * Copyright (C) 2015 Gabriele Brosulo <gabriele@brosulo.net>
+ *                    Alessandro Astarita <aleast@capri.it>
  *
  * http://github.com/asterixcapri/gestpaycrypt-php
  *
