@@ -21,7 +21,7 @@ Installazione
 Puoi installare questa libreria utilizzando `composer`:
 
 ```
-composer require 'asterixcapri/gestpaycrypt-php@~3.0'
+composer require asterixcapri/gestpaycrypt:~3.0
 ```
 
 Links
