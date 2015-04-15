@@ -424,7 +424,7 @@ class GestPayCryptWS
         return $this->domainName;
     }
 		
-		public function getDomainNameS2S()
+	public function getDomainNameS2S()
     {
         if ($this->testEnv === true) {
             return $this->testDomainName;
@@ -473,7 +473,7 @@ class GestPayCryptWS
     {
         $this->context = stream_context_create(array(
             'ssl' => array(
-                        'ciphers' => $ciphers
+                'ciphers' => $ciphers
             )
         ));
 
@@ -517,10 +517,10 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->getShopLogin(),
-                'uicCode' => $this->getCurrency(),
-                'amount' => $this->getAmount(),
-                'shopTransactionId' => $this->getShopTransactionID(),
+            'shopLogin' => $this->getShopLogin(),
+            'uicCode' => $this->getCurrency(),
+            'amount' => $this->getAmount(),
+            'shopTransactionId' => $this->getShopTransactionID(),
         );
 
         return array_merge($params, $this->getOptParams());
@@ -534,8 +534,8 @@ class GestPayCryptWS
     {
         // Parametri obbligatori
         $params = array(
-                'shopLogin' => $this->getShopLogin(),
-                'CryptedString' => $this->getEncryptedString(),
+            'shopLogin' => $this->getShopLogin(),
+            'CryptedString' => $this->getEncryptedString(),
         );
 
         return array_merge($params, $this->getOptParams());
@@ -554,19 +554,15 @@ class GestPayCryptWS
         if (isset($this->buyerName)) {
             $params['buyerName'] = $this->getBuyerName();
         }
-
         if (isset($this->buyerEmail)) {
             $params['buyerEmail'] = $this->getBuyerEmail();
         }
-        
 		if (isset($this->language)) {
             $params['languageId'] = $this->getLanguage();
         }
-        
         if (isset($this->customInfo)) {
             $params['customInfo'] = $this->getCustomInfo();
         }
-        
         return $params;
     }
 
@@ -652,8 +648,7 @@ class GestPayCryptWS
         $objectresult = $client->__soapCall("Decrypt", array($this->getDecParams()));
 
         // Leggo l'output
-        $res = new SimpleXMLElement($objectresult->DecryptResult->any);
-				
+        $res = new SimpleXMLElement($objectresult->DecryptResult->any);				
         if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
@@ -665,13 +660,13 @@ class GestPayCryptWS
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
 						
-						$this->setShopTransactionID((string) $res->ShopTransactionID);
-						$this->setBankTransactionID((string) $res->BankTransactionID);
-						$this->setAuthorizationCode((string) $res->AuthorizationCode);
-						$this->setCurrency((int) $res->Currency);
-						$this->setAmount((float) $res->Amount);
-						$this->setCustomInfo((string) $res->CustomInfo);
-						$this->setDecrypted((string) $res->asXML());
+            $this->setShopTransactionID((string) $res->ShopTransactionID);
+            $this->setBankTransactionID((string) $res->BankTransactionID);
+            $this->setAuthorizationCode((string) $res->AuthorizationCode);
+            $this->setCurrency((int) $res->Currency);
+            $this->setAmount((float) $res->Amount);
+            $this->setCustomInfo((string) $res->CustomInfo);
+            $this->setDecrypted((string) $res->asXML());
 
             if ($ErrorCode == 0) {
                 // Decrypted
