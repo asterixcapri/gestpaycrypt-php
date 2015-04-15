@@ -52,6 +52,7 @@ class GestPayCryptWS
     private $transactionResult;
     private $transport;
     private $domainName;
+    private $domainNameS2S;
     private $testDomainName;
     private $paymentUrl;
     private $separator;
@@ -71,7 +72,8 @@ class GestPayCryptWS
         $this->shopTransactionId = "";
 
         $this->testEnv = false;
-        $this->domainName = "ecommS2S.sella.it";
+        $this->domainName = "ecomm.sella.it";
+        $this->domainNameS2S = "ecommS2S.sella.it";
         $this->testDomainName = "testecomm.sella.it";
         $this->paymentUrl = "/pagam/pagam.aspx";
         $this->separator = "*P1*";
@@ -421,6 +423,14 @@ class GestPayCryptWS
 
         return $this->domainName;
     }
+		
+	public function getDomainNameS2S()
+    {
+        if ($this->testEnv === true) {
+            return $this->testDomainName;
+        }
+        return $this->domainNameS2S;
+    }
 
     public function getPaymentUrl()
     {
@@ -495,7 +505,7 @@ class GestPayCryptWS
      */
     private function getWsdl()
     {
-        return 'https://' . $this->getDomainName() .
+        return 'https://' . $this->getDomainNameS2S() .
             '/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL';
     }
 
@@ -544,19 +554,15 @@ class GestPayCryptWS
         if (isset($this->buyerName)) {
             $params['buyerName'] = $this->getBuyerName();
         }
-
         if (isset($this->buyerEmail)) {
             $params['buyerEmail'] = $this->getBuyerEmail();
         }
-
-        if (isset($this->language)) {
+		if (isset($this->language)) {
             $params['languageId'] = $this->getLanguage();
         }
-
         if (isset($this->customInfo)) {
             $params['customInfo'] = $this->getCustomInfo();
         }
-
         return $params;
     }
 
@@ -642,8 +648,7 @@ class GestPayCryptWS
         $objectresult = $client->__soapCall("Decrypt", array($this->getDecParams()));
 
         // Leggo l'output
-        $res = new SimpleXMLElement($objectresult->DecryptResult->any);
-
+        $res = new SimpleXMLElement($objectresult->DecryptResult->any);				
         if ($res !== false) {
             // Parso i contenuti della risposta
             $TransactionType = (string) $res->TransactionType;
@@ -654,7 +659,7 @@ class GestPayCryptWS
             // Gestione degli errori
             $this->setError($ErrorCode, $ErrorDescription);
             $this->setTransactionResult($TransactionResult);
-
+						
             $this->setShopTransactionID((string) $res->ShopTransactionID);
             $this->setBankTransactionID((string) $res->BankTransactionID);
             $this->setAuthorizationCode((string) $res->AuthorizationCode);
