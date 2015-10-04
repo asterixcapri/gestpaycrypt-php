@@ -13,6 +13,7 @@ if (empty($_GET["b"])) {
 $gestpay = new GestPayCryptWS();
 $gestpay->setShopLogin($_GET["a"]);
 $gestpay->setEncryptedString($_GET["b"]);
+$gestpay->setTestEnv(true);
 
 if (!$gestpay->decrypt()) {
     throw new Exception(
