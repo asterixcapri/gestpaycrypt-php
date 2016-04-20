@@ -1,3 +1,6 @@
+2016-04-20 aleast@capri.it
+  * Bugfix da Gabriele Brosulo <gabriele@brosulo.net> e @prom-flame
+
 2015-03-23 aleast@capri.it
   * Aggiunta classe GestPayCryptWS da Gabriele Brosulo <gabriele@brosulo.net>
 
@@ -11,7 +14,7 @@
 
 2003-07-04 aleast@capri.it
   * Supporto della chiamata High Security GestPayCryptHS attraverso
-    tre possibilità:
+    tre possibilitÃ :
 
     - PHP > 4.3.0 e supporto estensione OpenSSL
     - PHP con supporto CURL
