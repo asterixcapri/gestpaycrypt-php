@@ -2,7 +2,7 @@
     "name": "asterixcapri/gestpaycrypt",
     "description": "PHP library for GestPay payment gateway.",
     "keywords": ["gestpay", "bancasella", "payment", "e-commerce"],
-    "version": "3.0.0",
+    "version": "3.0.1",
     "minimum-stability": "stable",
     "license": "LGPL-2.1",
     "authors": [
